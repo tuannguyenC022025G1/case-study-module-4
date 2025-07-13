@@ -1,47 +1,34 @@
-package com.inotes.model;
+package com.inotes.service;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import com.inotes.model.Note;
+import com.inotes.model.NoteType;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NoteManagement {
     private Note note;
     private String storeType;
+    private final NoteRepository noteRepository;
 
-    public NoteManagement() {
-        note = new NoteDB();
+    public NoteManagement(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
+        note = new NoteDB(noteRepository);
         storeType = "DB";
     }
 
     public void changeNoteStore(String storeType) {
         this.storeType = storeType;
-        this.note = storeType.equals("DB") ? new NoteDB() : new NoteFile();
+        this.note = storeType.equals("DB") ? new NoteDB(noteRepository) : new NoteFile();
     }
 
     public List<Note> searchNotes(String keyword) {
         List<Note> results = new ArrayList<>();
         if (storeType.equals("DB")) {
-            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/case_study_module_4", "root", "password")) {
-                PreparedStatement stmt = conn.prepareStatement(
-                        "SELECT n.id, n.title, n.content, n.type_id, t.name FROM notes n JOIN note_types t ON n.type_id = t.id WHERE n.title LIKE ? OR n.content LIKE ?"
-                );
-                stmt.setString(1, "%" + keyword + "%");
-                stmt.setString(2, "%" + keyword + "%");
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    NoteDB note = new NoteDB();
-                    note.setId(rs.getInt("id"));
-                    note.setTitle(rs.getString("title"));
-                    note.setContent(rs.getString("content"));
-                    note.setTypeId(rs.getInt("type_id"));
-                    results.add(note);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            results = noteRepository.searchNotes(keyword);
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader("notes.txt"))) {
                 String line;

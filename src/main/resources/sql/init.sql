@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS note_types (
 CREATE TABLE IF NOT EXISTS notes (
                                      id INT AUTO_INCREMENT PRIMARY KEY,
                                      title VARCHAR(255) NOT NULL,
-    content TEXT NOT NOT NULL,
+    content TEXT NOT NULL,
     type_id INT,
     FOREIGN KEY (type_id) REFERENCES note_types(id)
     );

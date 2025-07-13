@@ -1,18 +1,29 @@
 package com.inotes.controller;
 
-import com.inotes.model.*;
+import com.inotes.model.Note;
+import com.inotes.model.NoteType;
+import com.inotes.service.NoteDB;
+import com.inotes.service.NoteFile;
+import com.inotes.service.NoteManagement;
+import com.inotes.service.NoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/notes")
 public class NoteController {
-    private NoteManagement noteManagement = new NoteManagement();
+    private final NoteManagement noteManagement;
+    private final NoteRepository noteRepository;
+
+    @Autowired
+    public NoteController(NoteManagement noteManagement, NoteRepository noteRepository) {
+        this.noteManagement = noteManagement;
+        this.noteRepository = noteRepository;
+    }
 
     @GetMapping
     public String listNotes(Model model) {
@@ -23,20 +34,7 @@ public class NoteController {
 
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        List<NoteType> noteTypes = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/case_study_module_4", "root", "password")) {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT id, name FROM note_types");
-            while (rs.next()) {
-                NoteType type = new NoteType();
-                type.setId(rs.getInt("id"));
-                type.setName(rs.getString("name"));
-                noteTypes.add(type);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        model.addAttribute("noteTypes", noteTypes);
+        model.addAttribute("noteTypes", noteRepository.getAllNoteTypes());
         return "addNote";
     }
 

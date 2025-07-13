@@ -13,8 +13,9 @@ repositories {
 dependencies {
     implementation 'org.springframework:spring-webmvc:5.3.20'
     implementation 'org.thymeleaf:thymeleaf-spring5:3.0.15.RELEASE'
+    implementation 'org.springframework:spring-jdbc:5.3.20'
     implementation 'mysql:mysql-connector-java:8.0.27'
-    providedRuntime 'javax.servlet:javax.servlet-api:4.0.1'
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'  // Thay đổi từ providedRuntime thành compileOnly
 }
 
 war {

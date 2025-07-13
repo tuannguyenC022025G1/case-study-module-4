@@ -1,0 +1,1 @@
+# Create an empty notes.txt file in the project root

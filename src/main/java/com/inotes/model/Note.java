@@ -7,6 +7,7 @@ public interface Note {
     String getTitle();
     String getContent();
     String getType();
+    int getTypeId();
     void save();
     void delete();
     int getId();

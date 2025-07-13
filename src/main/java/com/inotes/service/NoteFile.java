@@ -1,4 +1,6 @@
-package com.inotes.model;
+package com.inotes.service;
+
+import com.inotes.model.Note;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -44,6 +46,11 @@ public class NoteFile implements Note {
             case 3 -> "Study";
             default -> "Unknown";
         };
+    }
+
+    @Override
+    public int getTypeId() {
+        return typeId;
     }
 
     @Override
