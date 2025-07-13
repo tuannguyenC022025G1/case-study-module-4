@@ -24,7 +24,9 @@
             <td class="p-2"><a th:href="@{/notes/detail(id=${note.id})}" th:text="${note.title}"></a></td>
             <td class="p-2" th:text="${note.type}"></td>
             <td class="p-2">
-                <a th:href="@{/notes/delete(id=${note.id})}" class="text-red-500">Delete</a>
+                <a th:href="@{/notes/delete(id=${note.id})}"
+                   onclick="return confirm('Bạn có chắc chắn muốn xóa ghi chú này không?');"
+                   style="color: red;">Delete</a>
             </td>
         </tr>
         </tbody>

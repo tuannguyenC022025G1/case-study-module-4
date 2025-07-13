@@ -25,6 +25,11 @@ public class NoteController {
         this.noteRepository = noteRepository;
     }
 
+    @GetMapping("/")
+    public String redirectToNotesFromRoot() {
+        return "redirect:/notes";
+    }
+
     @GetMapping
     public String listNotes(Model model) {
         List<Note> notes = noteManagement.searchNotes("");
@@ -68,4 +73,5 @@ public class NoteController {
         model.addAttribute("notes", notes);
         return "searchNotes";
     }
+
 }
