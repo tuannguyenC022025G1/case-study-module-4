@@ -1,6 +1,7 @@
 package com.inotes.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.ViewResolver;
@@ -16,6 +17,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebMvc
+@ComponentScan("com.inotes")
 public class MvcConfig implements WebMvcConfigurer {
 
     private final ServletContext servletContext;

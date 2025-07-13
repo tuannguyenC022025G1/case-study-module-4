@@ -2,13 +2,14 @@ package com.inotes.service;
 
 import com.inotes.model.Note;
 import com.inotes.model.NoteType;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class NoteManagement {
     private Note note;
     private String storeType;

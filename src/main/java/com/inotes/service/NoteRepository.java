@@ -2,12 +2,13 @@ package com.inotes.service;
 
 import com.inotes.model.Note;
 import com.inotes.model.NoteType;
+import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class NoteRepository {
 
     private final DataSource dataSource;
