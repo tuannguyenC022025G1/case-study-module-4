@@ -46,7 +46,7 @@ public class NoteController {
     }
 
     @GetMapping("/detail")
-    public String showDetail(@RequestParam int id, Model model) {
+    public String showDetail(@RequestParam (required = false)int id, Model model) {
         List<Note> notes = noteManagement.searchNotes("");
         Note note = notes.stream().filter(n -> {
             if (n instanceof NoteDB) return ((NoteDB) n).getId() == id;
@@ -63,7 +63,7 @@ public class NoteController {
     }
 
     @GetMapping("/search")
-    public String searchNotes(@RequestParam String keyword, Model model) {
+    public String searchNotes(@RequestParam (required = false )String keyword, Model model) {
         List<Note> notes = noteManagement.searchNotes(keyword);
         model.addAttribute("notes", notes);
         return "searchNotes";
